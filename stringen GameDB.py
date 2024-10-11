@@ -6,13 +6,15 @@ from datetime import datetime
 con = sqlite3.connect("games.db", isolation_level=None)
 cursor = con.cursor()
 
+# Insert your own Client ID and Authorization key at every API call, fields are left blank.
+
 def gamesearch(game_title):
     response = requests.post(
         "https://api.igdb.com/v4/games",
         **{
             "headers": {
-                "Client-ID": "fsuvms6p1fo99ditwh8c3adbxju2j3",
-                "Authorization": "Bearer xzrn731906426w263m1r75hgv3eka5",
+                "Client-ID": "",
+                "Authorization": "",
             },
             "data": f'fields id, name, involved_companies, first_release_date, genres; where name ~ "{game_title}"; sort rating desc;',
         },
@@ -27,8 +29,8 @@ def publishersearch(response): # returns the publisher name for the first game o
                 "https://api.igdb.com/v4/involved_companies",
                 **{
                     "headers": {
-                        "Client-ID": "fsuvms6p1fo99ditwh8c3adbxju2j3",
-                        "Authorization": "Bearer xzrn731906426w263m1r75hgv3eka5",
+                        "Client-ID": "",
+                        "Authorization": "",
                     },
                     "data": f"fields company, publisher; where id = {company};",
                 },
@@ -38,8 +40,8 @@ def publishersearch(response): # returns the publisher name for the first game o
                     "https://api.igdb.com/v4/companies",
                     **{
                         "headers": {
-                            "Client-ID": "fsuvms6p1fo99ditwh8c3adbxju2j3",
-                            "Authorization": "Bearer xzrn731906426w263m1r75hgv3eka5",
+                            "Client-ID": "",
+                            "Authorization": "",
                         },
                         "data": f"fields name, country; where id = {is_publisher[0]['company']};",
                     },
